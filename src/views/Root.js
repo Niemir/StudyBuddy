@@ -1,11 +1,11 @@
 import React from 'react';
-
-import UsersList from 'compontents/UsersList/UsersList';
-
-import styled from 'styled-components';
+import UsersList from 'compontents/organisms/UsersList/UsersList';
+import { GlobalStyle } from 'assets/styles/globalStyle';
+import styled, { ThemeProvider } from 'styled-components';
+import { theme } from 'assets/styles/theme';
 
 const Wrapper = styled.div`
-  background-color: #f7f8fa;
+  background-color: ${({ theme }) => theme.colors.lightGrey};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -14,9 +14,12 @@ const Wrapper = styled.div`
 `;
 
 const Root = () => (
-  <Wrapper>
-    <UsersList />
-  </Wrapper>
+  <ThemeProvider theme={theme}>
+    <GlobalStyle />
+    <Wrapper>
+      <UsersList />
+    </Wrapper>
+  </ThemeProvider>
 );
 
 export default Root;
