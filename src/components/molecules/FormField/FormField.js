@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Label } from 'compontents/atoms/Label/Label';
-import { Input } from 'compontents/atoms/Input/Input';
+import { Label } from 'components/atoms/Label/Label';
+import { Input } from 'components/atoms/Input/Input';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
@@ -30,4 +30,6 @@ FormField.prototype = {
   label: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   type: PropTypes.string,
+  value: PropTypes.string,
+  onChange: PropTypes.func,
 };

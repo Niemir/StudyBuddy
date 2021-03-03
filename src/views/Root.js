@@ -1,32 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { users as usersData } from 'data/users';
-import UsersList from 'compontents/organisms/UsersList/UsersList';
-import Form from 'compontents/organisms/Form/Form';
-import { GlobalStyle } from 'assets/styles/globalStyle';
-import styled, { ThemeProvider } from 'styled-components';
+import React, { useState } from 'react';
+import { ThemeProvider } from 'styled-components';
+import { GlobalStyle } from 'assets/styles/GlobalStyle';
 import { theme } from 'assets/styles/theme';
-import { BrowserRouter as Router, Link, Switch, Route } from 'react-router-dom';
-
-const Wrapper = styled.div`
-  background-color: ${({ theme }) => theme.colors.lightGrey};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100vh;
-`;
-
-const mockAPI = (success) => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (usersData) {
-        resolve([...usersData]);
-      } else {
-        reject({ message: 'Error' });
-      }
-    }, 2000);
-  });
-};
+import { Wrapper } from './Root.styles';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { users as usersData } from 'data/users';
+import MainTemplate from 'components/templates/MainTemplate/MainTemplate';
+import AddUser from 'views/AddUser';
+import Dashboard from 'views/Dashboard';
 
 const initialFormState = {
   name: '',
@@ -36,17 +17,7 @@ const initialFormState = {
 
 const Root = () => {
   const [users, setUsers] = useState(usersData);
-  const [isLoading, setLoadingState] = useState([]);
   const [formValues, setFormValues] = useState(initialFormState);
-
-  useEffect(() => {
-    setLoadingState(true);
-
-    mockAPI().then((data) => {
-      setLoadingState(false);
-      setUsers(data);
-    });
-  }, []);
 
   const deleteUser = (name) => {
     const filteredUsers = users.filter((user) => user.name !== name);
@@ -54,6 +25,7 @@ const Root = () => {
   };
 
   const handleInputChange = (e) => {
+    console.log(formValues);
     setFormValues({
       ...formValues,
       [e.target.name]: e.target.value,
@@ -67,8 +39,8 @@ const Root = () => {
       attendance: formValues.attendance,
       average: formValues.average,
     };
-    setUsers([newUser, ...users]);
 
+    setUsers([newUser, ...users]);
     setFormValues(initialFormState);
   };
 
@@ -76,20 +48,18 @@ const Root = () => {
     <Router>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <Wrapper>
-          <nav>
-            <Link to="/">Users</Link>
-            <Link to="add-user">Add User</Link>
-          </nav>
-          <Switch>
-            <Route path="/" exact>
-              <UsersList deleteUser={deleteUser} users={users} isLoading={isLoading} />
-            </Route>
-            <Route path="/add-user">
-              <Form formValues={formValues} handleInputChange={handleInputChange} handleAddUser={handleAddUser} />
-            </Route>
-          </Switch>
-        </Wrapper>
+        <MainTemplate>
+          <Wrapper>
+            <Switch>
+              <Route path="/add-user">
+                <AddUser formValues={formValues} handleAddUser={handleAddUser} handleInputChange={handleInputChange} />
+              </Route>
+              <Route path="/">
+                <Dashboard deleteUser={deleteUser} users={users} />
+              </Route>
+            </Switch>
+          </Wrapper>
+        </MainTemplate>
       </ThemeProvider>
     </Router>
   );
