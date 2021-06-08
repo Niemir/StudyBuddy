@@ -23,7 +23,7 @@ export const StyledNav = styled.nav`
   padding-left: 20px;
 `;
 
-export const StyledLink = styled(NavLink)`
+export const StyledLink = styled(NavLink).attrs({ activeClassName: 'active' })`
   color: ${({ theme }) => theme.colors.darkGrey};
   text-decoration: none;
   font-size: ${({ theme }) => theme.fontSize.m};
@@ -40,6 +40,7 @@ export const StyledLink = styled(NavLink)`
     margin-left: 5px;
     background-color: ${({ theme }) => theme.colors.borderColor};
     opacity: 0;
+    transition: opacity 0.2s ease-in-out;
   }
   &.active::after {
     opacity: 1;

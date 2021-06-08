@@ -4,17 +4,12 @@ import { ViewWrapper } from 'components/molecules/ViewWrapper/ViewWrapper';
 import UsersList from 'components/organisms/UsersList/UsersList';
 // import { UserShape } from 'prop-types';
 
-const Dashboard = ({ users, deleteUser }) => {
+const Dashboard = () => {
   return (
     <ViewWrapper>
-      <UsersList users={users} deleteUser={deleteUser} />
+      <UsersList />
     </ViewWrapper>
   );
-};
-
-Dashboard.propTypes = {
-  // users: PropTypes.arrayOf(PropTypes.shape(UserShape)),
-  deleteUser: PropTypes.func,
 };
 
 export default Dashboard;

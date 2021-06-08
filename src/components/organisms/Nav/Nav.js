@@ -11,7 +11,7 @@ const Nav = () => {
         </h1>
       </Logo>
       <StyledNav>
-        <StyledLink activeClassName="active" to="/" exact>
+        <StyledLink to="/" exact>
           Users
         </StyledLink>
         <StyledLink to="add-user">Add User</StyledLink>
