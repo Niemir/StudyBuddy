@@ -5,27 +5,29 @@ import axios from 'axios';
 import { Loader } from 'components/atoms/Loader/Loader';
 const API_TOKEN = process.env.REACT_APP_DATOCMS_TOKEN;
 
+export const query = `
+         {
+          allArticles {
+            id
+            title
+            category
+            content
+            image {
+              url
+            }
+          }
+        }
+      `;
+
 const NewsSection = () => {
   const [articles, setArticles] = useState([]);
-  const [error, setErrors] = useState(false);
+  const [error, setError] = useState(false);
   useEffect(() => {
     axios
       .post(
         'https://graphql.datocms.com/',
         {
-          query: `
-          {
-            allArticles {
-              id
-              title
-              category
-              content
-              image {
-                url
-              }
-            }
-          }
-          `,
+          query,
         },
         {
           headers: {
@@ -36,7 +38,7 @@ const NewsSection = () => {
       .then(({ data: { data } }) => {
         setArticles(data.allArticles);
       })
-      .catch((err) => setErrors(true));
+      .catch((err) => setError(`Sorry, we couldn't load articles for you`));
   }, []);
   return (
     <Wrapper>
@@ -57,7 +59,7 @@ const NewsSection = () => {
           </ArticleWrapper>
         ))
       ) : (
-        <>{error ? <h3>Sorry, we couldn't load articles</h3> : <Loader />}</>
+        <>{error ? <h3>{error}</h3> : <Loader />}</>
       )}
     </Wrapper>
   );
