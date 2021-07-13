@@ -29,4 +29,21 @@ export const handlers = [
       })
     );
   }),
+  rest.get('/search/:name', (req, res, ctx) => {
+    if (req.params.name) {
+      const matchingStudents = students.filter((student) => student.name.toLowerCase().includes(req.params.name.toLowerCase()));
+      return res(
+        ctx.status(200),
+        ctx.json({
+          students: matchingStudents,
+        })
+      );
+    }
+    return res(
+      ctx.status(200),
+      ctx.json({
+        students,
+      })
+    );
+  }),
 ];

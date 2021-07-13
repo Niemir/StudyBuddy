@@ -11,7 +11,7 @@ export const SearchBarWrapper = styled.div`
   ${Input} {
     font-size: ${({ theme }) => theme.fontSize.l};
     width: 100%;
-    max-width: 350px;
+
     border: 2px solid ${({ theme }) => theme.colors.lightPurple};
   }
 `;
@@ -21,5 +21,26 @@ export const StatusInfo = styled.div`
   margin-right: 40px;
   p {
     margin: 5px;
+  }
+`;
+
+export const StyledInputWrapper = styled.div`
+  width: 100%;
+  position: relative;
+  max-width: 350px;
+`;
+
+export const StyledUsers = styled.div`
+  position: absolute;
+  left: 0;
+  bottom: 2px;
+  transform: translateY(100%);
+  background: white;
+  width: 100%;
+  border-radius: 10px;
+  max-height: 300px;
+  overflow: auto;
+  li {
+    padding: 10px 20px;
   }
 `;
