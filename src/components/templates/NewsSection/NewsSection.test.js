@@ -3,7 +3,7 @@ import { screen } from '@testing-library/react';
 import MockAdapter from 'axios-mock-adapter';
 import axios from 'axios';
 import NewsSection, { query } from 'components/templates/NewsSection/NewsSection';
-import { renderWithProviders } from 'helpers/renderWithProviders';
+import { renderWithProviders } from 'helpers/renderWithThemeProvider';
 
 const mock = new MockAdapter(axios);
 

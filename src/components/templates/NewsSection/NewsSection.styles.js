@@ -1,9 +1,9 @@
-import { ViewWrapper } from 'components/molecules/ViewWrapper/ViewWrapper';
 import styled from 'styled-components';
+import { ViewWrapper } from 'components/molecules/ViewWrapper/ViewWrapper';
 
 export const Wrapper = styled.div`
-  grid-row: 1/3;
-  grid-column: 3/3;
+  grid-row: 1 / 3;
+  grid-column: 3 / 3;
   border-left: 1px solid ${({ theme }) => theme.colors.darkPurple};
   display: flex;
   flex-direction: column;
@@ -24,23 +24,27 @@ export const ArticleWrapper = styled(ViewWrapper)`
   max-width: unset;
   border-radius: 12px;
   color: ${({ theme }) => theme.colors.darkGrey};
+
   p {
-    line-height: 1.5;
+    line-height: 1.6;
   }
 `;
+
 export const TitleWrapper = styled.div`
-  margin-bottom: 20px;
   h3 {
     margin: 0;
     font-size: ${({ theme }) => theme.fontSize.xl};
   }
+
   p {
-    font-size: ${({ theme }) => theme.fontSize.m};
     margin: 0;
+    font-size: ${({ theme }) => theme.fontSize.l};
   }
 `;
+
 export const ContentWrapper = styled.div`
   display: flex;
+
   img {
     margin-left: 35px;
     max-width: 200px;

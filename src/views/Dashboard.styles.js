@@ -1,43 +1,37 @@
 import styled from 'styled-components';
-import { Title } from 'components/atoms/Title/Title';
+import { ViewWrapper } from 'components/molecules/ViewWrapper/ViewWrapper';
 
-export const StyledWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
+export const Wrapper = styled.div`
   width: 100%;
   height: 100%;
-`;
-export const StyledTitle = styled(Title)`
-  min-width: 160px;
-`;
-export const StyledTop = styled.div`
   display: flex;
-  align-items: center;
-  padding-left: 30px;
-  margin: 20px 0 30px 25px;
+  flex-direction: column;
+  padding: 20px 50px;
 `;
 
-export const StyledNav = styled.nav`
-  margin-left: 20px;
+export const GroupWrapper = styled(ViewWrapper)`
+  margin: 0;
+`;
+
+export const TitleWrapper = styled.div`
   display: flex;
-  a {
-    background: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
+  align-items: center;
+
+  nav a {
+    margin-left: 15px;
+    display: inline-block;
+    text-align: center;
+    background-color: white;
+    border-radius: 50px;
+    padding: 5px;
+    width: 30px;
+    height: 30px;
     text-decoration: none;
-    text-transform: uppercase;
-    font-weight: bold;
     color: ${({ theme }) => theme.colors.darkGrey};
-    margin-right: 10px;
-    &:hover {
-      background-color: ${({ theme }) => theme.colors.darkGrey};
-      color: #fff;
-    }
+    font-weight: bold;
+  }
+
+  nav a:hover {
+    background-color: ${({ theme }) => theme.colors.lightPurple};
   }
 `;

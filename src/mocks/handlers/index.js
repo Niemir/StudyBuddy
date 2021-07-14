@@ -4,15 +4,20 @@ import { groups } from 'mocks/data/groups';
 
 export const handlers = [
   rest.get('/groups', (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json({ groups }));
+  }),
+  rest.post('/students/search', (req, res, ctx) => {
+    const matchingStudents = req.body.searchPhrase
+      ? students.filter((student) => student.name.toLowerCase().includes(req.body.searchPhrase.toLowerCase()))
+      : [];
     return res(
       ctx.status(200),
       ctx.json({
-        groups,
+        students: matchingStudents,
       })
     );
   }),
   rest.get('/students/:group', (req, res, ctx) => {
-    // console.log(req);
     if (req.params.group) {
       const matchingStudents = students.filter((student) => student.group === req.params.group);
       return res(
@@ -22,23 +27,7 @@ export const handlers = [
         })
       );
     }
-    return res(
-      ctx.status(200),
-      ctx.json({
-        students,
-      })
-    );
-  }),
-  rest.get('/search/:name', (req, res, ctx) => {
-    if (req.params.name) {
-      const matchingStudents = students.filter((student) => student.name.toLowerCase().includes(req.params.name.toLowerCase()));
-      return res(
-        ctx.status(200),
-        ctx.json({
-          students: matchingStudents,
-        })
-      );
-    }
+
     return res(
       ctx.status(200),
       ctx.json({

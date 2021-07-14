@@ -1,40 +1,42 @@
-import React, { useEffect, useState } from 'react';
-import { SearchBarWrapper, StatusInfo, StyledInputWrapper, StyledUsers } from './SearchBar.styles';
 import { Input } from 'components/atoms/Input/Input';
-import axios from 'axios';
-const SearchBar = () => {
-  const [students, setStudents] = useState([]);
-  const [search, setSearch] = useState('');
+import React, { useState, useEffect } from 'react';
+import debounce from 'lodash.debounce';
+import { SearchBarWrapper, SearchResults, SearchWrapper, StatusInfo } from 'components/organisms/SearchBar/SearchBar.styles';
+import { useStudents } from 'hooks/useStudents';
 
-  const handleInputChange = (e) => {
-    setSearch(e.target.value);
-  };
+export const SearchBar = () => {
+  const [searchPhrase, setSearchPhrase] = useState('');
+  const [matchingStudents, setMatchingStudents] = useState('');
+  const { findStudents } = useStudents();
+
+  const getMatchingStudents = debounce(async (e) => {
+    const { students } = await findStudents(searchPhrase);
+    setMatchingStudents(students);
+  }, 500);
 
   useEffect(() => {
-    if (search === '') {
-      setStudents([]);
-    }
-    axios
-      .get(`/search/${search}`)
-      .then(({ data }) => setStudents(data?.students))
-      .catch((err) => console.log(err));
-  }, [search]);
+    if (!searchPhrase) return;
+    getMatchingStudents(searchPhrase);
+  }, [searchPhrase, getMatchingStudents]);
 
   return (
     <SearchBarWrapper>
       <StatusInfo>
-        <p> Logged as:</p>
+        <p>Logged as:</p>
         <p>
           <strong>Teacher</strong>
         </p>
       </StatusInfo>
-
-      <StyledInputWrapper>
-        <Input onChange={handleInputChange} value={search} />
-        <StyledUsers>{students ? students.map((student) => <li key={student.id}>{student.name}</li>) : null}</StyledUsers>
-      </StyledInputWrapper>
+      <SearchWrapper>
+        <Input onChange={(e) => setSearchPhrase(e.target.value)} value={searchPhrase} name="Search" id="Search" />
+        {searchPhrase && matchingStudents.length ? (
+          <SearchResults>
+            {matchingStudents.map((student) => (
+              <li key={student.id}>{student.name}</li>
+            ))}
+          </SearchResults>
+        ) : null}
+      </SearchWrapper>
     </SearchBarWrapper>
   );
 };
-
-export default SearchBar;

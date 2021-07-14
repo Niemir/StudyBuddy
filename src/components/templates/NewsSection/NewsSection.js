@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Wrapper, ArticleWrapper, TitleWrapper, ContentWrapper } from './NewsSection.styles';
+import { ArticleWrapper, ContentWrapper, NewsSectionHeader, TitleWrapper, Wrapper } from 'components/templates/NewsSection/NewsSection.styles';
 import { Button } from 'components/atoms/Button/Button';
 import axios from 'axios';
-import { Loader } from 'components/atoms/Loader/Loader';
-const API_TOKEN = process.env.REACT_APP_DATOCMS_TOKEN;
 
 export const query = `
          {
@@ -21,7 +19,8 @@ export const query = `
 
 const NewsSection = () => {
   const [articles, setArticles] = useState([]);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState('');
+
   useEffect(() => {
     axios
       .post(
@@ -31,37 +30,40 @@ const NewsSection = () => {
         },
         {
           headers: {
-            authorization: `Bearer ${API_TOKEN}`,
+            authorization: `Bearer ${process.env.REACT_APP_DATOCMS_TOKEN}`,
           },
         }
       )
       .then(({ data: { data } }) => {
         setArticles(data.allArticles);
       })
-      .catch((err) => setError(`Sorry, we couldn't load articles for you`));
+      .catch(() => {
+        setError(`Sorry, we couldn't load articles for you`);
+      });
   }, []);
+
   return (
     <Wrapper>
-      <h2>News feed section</h2>
-
+      <NewsSectionHeader>University news feed</NewsSectionHeader>
       {articles.length > 0 ? (
-        articles.map(({ title, category, content, image = null }) => (
-          <ArticleWrapper key={title}>
+        articles.map(({ id, title, category, content, image = null }) => (
+          <ArticleWrapper key={id}>
             <TitleWrapper>
               <h3>{title}</h3>
               <p>{category}</p>
             </TitleWrapper>
             <ContentWrapper>
               <p>{content}</p>
-              {image ? <img src={image.url} alt="article image" /> : null}
+              {image ? <img src={image.url} alt="article" /> : null}
             </ContentWrapper>
-            <Button isBig>click me</Button>
+            <Button isBig>Read more</Button>
           </ArticleWrapper>
         ))
       ) : (
-        <>{error ? <h3>{error}</h3> : <Loader />}</>
+        <NewsSectionHeader>{error ? error : 'Loading...'}</NewsSectionHeader>
       )}
     </Wrapper>
   );
 };
+
 export default NewsSection;

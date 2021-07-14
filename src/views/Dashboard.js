@@ -1,50 +1,33 @@
-import React, { useEffect, useState } from 'react';
-import { ViewWrapper } from 'components/molecules/ViewWrapper/ViewWrapper';
-import UsersList from 'components/organisms/UsersList/UsersList';
-import { Link, useParams } from 'react-router-dom';
-import axios from 'axios';
-
-import { StyledNav, StyledTitle, StyledTop, StyledWrapper } from './Dashboard.styles';
-
-// import { UserShape } from 'prop-types';
+import React from 'react';
+import { Redirect, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import StudentsList from 'components/organisms/StudentsList/StudentsList';
+import { useStudents } from 'hooks/useStudents';
+import { GroupWrapper, TitleWrapper, Wrapper } from 'views/Dashboard.styles';
+import { Title } from 'components/atoms/Title/Title';
 
 const Dashboard = () => {
-  const [students, setStudents] = useState([]);
-  const [groups, setGropus] = useState([]);
-
+  const { groups } = useStudents();
   const { id } = useParams();
 
-  useEffect(() => {
-    axios
-      .get(`/groups/`)
-      .then(({ data }) => setGropus(data.groups))
-      .catch((err) => console.log(err));
-  }, []);
-
-  useEffect(() => {
-    axios
-      .get(`/students/${id || groups[0]}`)
-      .then(({ data }) => setStudents(data.students))
-      .catch((err) => console.log(err));
-  }, [id, groups]);
+  if (!id && groups.length > 0) return <Redirect to={`/group/${groups[0]}`} />;
 
   return (
-    <StyledWrapper>
-      <StyledTop>
-        <StyledTitle> Group {id || groups[0]}</StyledTitle>
-
-        <StyledNav>
+    <Wrapper>
+      <TitleWrapper>
+        <Title as="h2">Group {id}</Title>
+        <nav>
           {groups.map((group) => (
             <Link key={group} to={`/group/${group}`}>
               {group}{' '}
             </Link>
           ))}
-        </StyledNav>
-      </StyledTop>
-      <ViewWrapper>
-        <UsersList users={students} />
-      </ViewWrapper>
-    </StyledWrapper>
+        </nav>
+      </TitleWrapper>
+      <GroupWrapper>
+        <StudentsList />
+      </GroupWrapper>
+    </Wrapper>
   );
 };
 

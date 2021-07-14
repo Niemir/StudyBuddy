@@ -1,7 +1,7 @@
-import React, { useState, createContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-export const UsersContext = createContext({
+export const UsersContext = React.createContext({
   users: [],
   handleAddUser: () => {},
   deleteUser: () => {},
@@ -22,16 +22,14 @@ const UsersProvider = ({ children }) => {
     setUsers(filteredUsers);
   };
 
-  const handleAddUser = (formValues) => {
+  const handleAddUser = (values) => {
     const newUser = {
-      name: formValues.name,
-      attendance: formValues.attendance,
-      average: formValues.average,
+      name: values.name,
+      attendance: values.attendance,
+      average: values.average,
     };
-
     setUsers([newUser, ...users]);
   };
-
   return (
     <UsersContext.Provider
       value={{
