@@ -6,7 +6,6 @@
       "warn",
       {
         "singleQuote": true,
-        "endOfLine": "auto",
         "printWidth": 150
       }
     ],
