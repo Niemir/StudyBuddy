@@ -12,9 +12,8 @@ const Nav = () => {
       </Logo>
       <StyledNav>
         <StyledLink to="/group" exact>
-          Users
+          Dashboard
         </StyledLink>
-        <StyledLink to="add-user">Add User</StyledLink>
       </StyledNav>
     </Wrapper>
   );
