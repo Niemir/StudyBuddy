@@ -16,11 +16,5 @@
     "node": true,
     "es6": true
   },
-  "parser": "babel-eslint",
-  "prettier/prettier": [
-    "error",
-    {
-      "endOfLine": "auto",
-    }
-  ]
+  "parser": "babel-eslint"
 }
