@@ -5,6 +5,21 @@ export const students = [
     attendance: '39%',
     average: '2.3',
     group: 'A',
+    course: 'Economy and finances',
+    averageGrades: [
+      {
+        classesName: 'Modern Economy',
+        grade: '3.4',
+      },
+      {
+        classesName: 'Trade and Logisitcs',
+        grade: '4.1',
+      },
+      {
+        classesName: 'Business Philosophy',
+        grade: '5.0',
+      },
+    ],
   },
   {
     id: '2',

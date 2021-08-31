@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import DeleteButton from 'components/atoms/DeleteButton/DeleteButton';
+import RoundedButton from 'components/atoms/RoundedButton/RoundedButton';
 import { StyledAverage, StyledInfo, Wrapper } from './StudentsListItem.styles';
 import { UserShape } from 'types';
 
@@ -11,7 +11,7 @@ const StudentsListItem = ({ userData: { average, name, attendance = '0%' }, ...p
       <StyledInfo>
         <p>
           {name}
-          <DeleteButton />
+          <RoundedButton iconType="delete" />
         </p>
         <p>attendance: {attendance}</p>
       </StyledInfo>

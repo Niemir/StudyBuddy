@@ -46,7 +46,7 @@ const Dashboard = () => {
       <GroupWrapper>
         <StudentsList handleStudentDetails={handleOpenStudentDetails} />
         {isOpen && (
-          <Modal handleClose={handleCloseModal}>
+          <Modal handleClose={handleCloseModal} buttonText="Save">
             <StudentDetails student={currentStudent} />
           </Modal>
         )}
