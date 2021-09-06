@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 const Modal = ({ handleClose, buttonText, children, isOpen }) => {
   return (
-    <ModalWrapper isOpen={isOpen} onRequestClose={handleClose}>
+    <ModalWrapper appElement={document.getElementById('root')} isOpen={isOpen} onRequestClose={handleClose}>
       {children}
       <Button isBig onClick={handleClose}>
         {buttonText}

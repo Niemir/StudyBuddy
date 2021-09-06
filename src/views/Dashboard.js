@@ -19,13 +19,13 @@ const Dashboard = () => {
   useEffect(() => {
     (async () => {
       const groups = await getGroups();
+      console.log(groups);
       setGroups(groups);
     })();
   }, [getGroups]);
 
   const handleOpenStudentDetails = async (id) => {
     const student = await getStudentById(id);
-
     setCurrentStudent(student);
     handleOpenModal();
   };
@@ -37,16 +37,16 @@ const Dashboard = () => {
       <TitleWrapper>
         <Title as="h2">Group {id}</Title>
         <nav>
-          {groups.map((group) => (
-            <Link key={group} to={`/group/${group}`}>
-              {group}{' '}
+          {groups.map(({ id }) => (
+            <Link key={id} to={`/group/${id}`}>
+              {id}{' '}
             </Link>
           ))}
         </nav>
       </TitleWrapper>
       <GroupWrapper>
         <StudentsList handleStudentDetails={handleOpenStudentDetails} />
-        <Modal isOpen={isOpen} handleClose={handleCloseModal} buttonText="Save">
+        <Modal buttonText={'Save'} isOpen={isOpen} handleClose={handleCloseModal}>
           <StudentDetails student={currentStudent} />
         </Modal>
       </GroupWrapper>

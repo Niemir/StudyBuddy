@@ -13,9 +13,15 @@ export const SearchBar = () => {
     setMatchingStudents(students);
   }, 500);
 
-  const { isOpen, getToggleButtonProps, getLabelProps, getMenuProps, getInputProps, getComboboxProps, highlightedIndex, getItemProps } = useCombobox({
+  const itemToString = (item) => (item ? item.name : '');
+
+  const { isOpen, getMenuProps, getInputProps, getComboboxProps, highlightedIndex, getItemProps } = useCombobox({
     items: matchingStudents,
     onInputValueChange: getMatchingStudents,
+    itemToString,
+    onSelectedItemChange: () => {
+      console.log('add modal');
+    },
   });
 
   return (
@@ -26,7 +32,7 @@ export const SearchBar = () => {
           <strong>Teacher</strong>
         </p>
       </StatusInfo>
-      <SearchWrapper {...getComboboxProps()}>
+      <SearchWrapper {...getComboboxProps()} itemToString={(item) => (item ? item.name : '')}>
         <Input {...getInputProps()} name="Search" placeholder="Search" id="Search" />
 
         <SearchResults isVisible={isOpen && matchingStudents.length > 0} {...getMenuProps()} aria-label="results">

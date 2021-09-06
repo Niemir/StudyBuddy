@@ -16,4 +16,7 @@ export const ModalWrapper = styled(ReactModal)`
   justify-content: space-between;
   align-items: center;
   padding: 41px 41px 30px 48px;
+  &:focus {
+    outline: none;
+  }
 `;

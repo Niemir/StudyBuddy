@@ -26,15 +26,15 @@ const StudentDetails = ({ student }) => {
           </>
         )}
 
-        {student.averageGrades && (
+        {student.grades && (
           <div>
             <b>Average grades</b>
-            {student.averageGrades.map((grade, id) => {
+            {student.grades.map((grade, id) => {
               return (
                 <StyledGrade key={id}>
-                  <p>{grade.classesName}</p>
+                  <p>{grade.subject}</p>
 
-                  <StyledAverage value={grade.grade}>{grade.grade}</StyledAverage>
+                  <StyledAverage value={grade.average}>{grade.average}</StyledAverage>
                 </StyledGrade>
               );
             })}
