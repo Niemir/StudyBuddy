@@ -1,15 +1,8 @@
 import { render, screen, fireEvent, waitFor } from 'test-utils';
-import { setupServer } from 'msw/node';
-import { handlers } from 'mocks/handlers';
+
 import { SearchBar } from './SearchBar';
 
-const server = setupServer(...handlers);
-
 describe('Search Bar', () => {
-  beforeAll(() => server.listen());
-  afterEach(() => server.resetHandlers());
-  afterAll(() => server.close());
-
   it('Renders the component', () => {
     render(<SearchBar />);
 
@@ -21,21 +14,8 @@ describe('Search Bar', () => {
     render(<SearchBar />);
 
     const input = screen.getByPlaceholderText('Search');
-    fireEvent.change(input, { target: { value: 'ada' } });
+    fireEvent.change(input, { target: { value: 'Low' } });
 
-    await screen.findByText(/Adam Romański/);
-  });
-
-  it('Hide the results when inputs is empty', async () => {
-    render(<SearchBar />);
-
-    const input = screen.getByPlaceholderText('Search');
-    fireEvent.change(input, { target: { value: 'ada' } });
-    await screen.findByText(/Adam Romański/);
-
-    fireEvent.change(input, { target: { value: '' } });
-    await waitFor(() => {
-      expect(screen.getByLabelText('results')).not.toBeVisible();
-    });
+    await screen.findByText(/Lowell/);
   });
 });
