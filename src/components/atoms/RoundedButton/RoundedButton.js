@@ -22,5 +22,5 @@ const RoundedButton = ({ iconType, ...rest }) => <StyledButton {...rest}>{getIco
 export default RoundedButton;
 
 RoundedButton.propTypes = {
-  iconType: PropTypes.string.isRequired,
+  iconType: PropTypes.string,
 };
